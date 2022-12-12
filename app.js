@@ -2,30 +2,40 @@ const express = require('express');
 
 const app = express();
 
+
+//register view engine
+app.set('view engine','ejs');
+
+
+blog=[
+//     {
+//     title:'Yoshi fried egg',snippet:'this is the snippet of this blog'},
+//     {title:'Damm yummy',snippet:'this is the snippet of this blog'},
+//     {title:'Fish Danm',snippet:'this is the snippet of this blog'},
+];
+
+
 app.get('/',(req,res)=>{
 
-    res.send('<p>This is home page</p>');
+    res.render('index',{title:'Home',blog});
 
 });
 
-app.get('/home',(req,res)=>{
-    res.sendFile('./view/index.html',{root:__dirname})
 
-});
 
 app.get('/about',(req,res)=>{
-    res.sendFile('./view/about.html',{root:__dirname})
+    res.render('about',{title:'About'});
 
 });
 
 //redirect
-app.get('/about-us',(req,res)=>{
-    res.redirect('/about');
+app.get('/blogs/create',(req,res)=>{
+    res.render('create',{title:'create'});
 });
 
 //404 page
 app.use((req,res)=>{
-    res.sendFile('./view/404.html',{root:__dirname})
+    res.render('404');
 });
 
 app.listen('3000');
